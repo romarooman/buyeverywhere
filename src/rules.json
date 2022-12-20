@@ -1,0 +1,23 @@
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null",
+    "users": {
+      "email": {},
+      "password": { ".validate": false },
+      "fname": { ".validate": false },
+      "sname": { ".validate": false },
+      "phone": { ".validate": false }
+    },
+    "orders": {
+      "id": {},
+      "link": {},
+      "productname": {},
+      "cost": {},
+      "amount": {},
+      "size": {},
+      "article": {},
+      "modetobuy": {}
+    }
+  }
+}
