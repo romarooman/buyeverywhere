@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/buyeverywhere/static/css/main.1620fba3.css",
+    "main.js": "/buyeverywhere/static/js/main.222066f7.js",
+    "index.html": "/buyeverywhere/index.html",
+    "main.1620fba3.css.map": "/buyeverywhere/static/css/main.1620fba3.css.map",
+    "main.222066f7.js.map": "/buyeverywhere/static/js/main.222066f7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1620fba3.css",
+    "static/js/main.222066f7.js"
+  ]
+}
