@@ -6,8 +6,11 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase.js";
 import { useNavigate } from "react-router-dom";
-import "./welcome.css";
-
+import { styled } from "@mui/material/styles";
+import Button, { ButtonProps } from "@mui/material/Button";
+import { grey } from "@mui/material/colors";
+import TextField from "@mui/material/TextField";
+import styles from "./welcome.module.css";
 export default function Welcome() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +21,28 @@ export default function Welcome() {
     password: "",
     confirmPassword: "",
   });
+
+  const TextField1 = styled(Button)({
+    width: "250px",
+  });
+  const ColorButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(grey[700]),
+    margin: "15px",
+    width: "250px",
+    backgroundColor: grey[900],
+    "&:hover": {
+      backgroundColor: grey[700],
+    },
+  }));
+
+  const BackButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(grey[700]),
+    color: grey[500],
+    "&:hover": {
+      backgroundColor: grey[500],
+      color: grey[50],
+    },
+  }));
 
   const navigate = useNavigate();
 
@@ -67,14 +92,14 @@ export default function Welcome() {
   };
 
   return (
-    <div className="welcome">
-      <h1>You get a lot of clothes</h1>
-      <div className="login-register-container">
+    <div className={styles.welcome}>
+      <div className={styles.loginRegisterContainer}>
         {isRegistering ? (
           <>
-            <input
+            <TextField
+              variant="standard"
               type="email"
-              placeholder="Email"
+              placeholder="E-MAIL"
               value={registerInformation.email}
               onChange={(e) =>
                 setRegisterInformation({
@@ -83,9 +108,10 @@ export default function Welcome() {
                 })
               }
             />
-            <input
-              type="email"
-              placeholder="Confirm Email"
+            <TextField
+              variant="standard"
+              label="email"
+              placeholder="Confirm E-MAIL"
               value={registerInformation.confirmEmail}
               onChange={(e) =>
                 setRegisterInformation({
@@ -94,9 +120,10 @@ export default function Welcome() {
                 })
               }
             />
-            <input
+            <TextField
+              variant="standard"
               type="password"
-              placeholder="Password"
+              placeholder="Пароль"
               value={registerInformation.password}
               onChange={(e) =>
                 setRegisterInformation({
@@ -105,9 +132,10 @@ export default function Welcome() {
                 })
               }
             />
-            <input
+            <TextField
+              variant="standard"
               type="password"
-              placeholder="Confirm Password"
+              placeholder="Повторите Пароль"
               value={registerInformation.confirmPassword}
               onChange={(e) =>
                 setRegisterInformation({
@@ -116,42 +144,59 @@ export default function Welcome() {
                 })
               }
             />
-            <button
-              className="sign-in-register-button"
-              onClick={handleRegister}
-            >
-              Register
-            </button>
-            <button
+            <ColorButton variant="contained" onClick={handleRegister}>
+              Регистрация
+            </ColorButton>
+            <BackButton
+              variant="text"
               className="create-account-button"
               onClick={() => setIsRegistering(false)}
             >
-              Go back
-            </button>
+              Назад
+            </BackButton>
           </>
         ) : (
           <>
-            <input
-              type="email"
-              placeholder="Email"
-              onChange={handleEmailChange}
-              value={email}
-            />
-            <input
-              type="password"
-              onChange={handlePasswordChange}
-              value={password}
-              placeholder="Password"
-            />
-            <button className="sign-in-register-button" onClick={handleSignIn}>
-              Sign In
-            </button>
-            <button
-              className="create-account-button"
-              onClick={() => setIsRegistering(true)}
-            >
-              Create an account
-            </button>
+            <div className={styles.header}>
+              <div className={styles.headerline}>
+                <span className={styles.headerS}>Вход</span>
+                <TextField
+                  variant="standard"
+                  type="email"
+                  placeholder="E-MAIL"
+                  onChange={handleEmailChange}
+                  value={email}
+                />
+                <TextField
+                  variant="standard"
+                  type="password"
+                  onChange={handlePasswordChange}
+                  value={password}
+                  placeholder="Пароль"
+                />
+                <ColorButton variant="contained" onClick={handleSignIn}>
+                  Вход
+                </ColorButton>
+              </div>
+              <div className={styles.headerline}>
+                <span className={styles.headerS}>Регистрация</span>
+                <span className={styles.headerText}>
+                  Если вы не зарегистрированы, используйте эту КНОПКУ? для
+                  перехода к форме регистрации
+                  {"\n"}
+                  <br />
+                  Мы используем данную информацию для подтверждения ваших
+                  заказов и связи с вами
+                </span>
+                <ColorButton
+                  color="primary"
+                  onClick={() => setIsRegistering(true)}
+                  variant="text"
+                >
+                  Регистрация
+                </ColorButton>
+              </div>
+            </div>
           </>
         )}
       </div>

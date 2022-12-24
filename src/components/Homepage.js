@@ -42,7 +42,7 @@ export default function Homepage() {
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
-        navigate("/");
+        navigate("/buyeverywhere");
       })
       .catch((err) => {
         alert(err.message);

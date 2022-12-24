@@ -1,0 +1,44 @@
+@import url("https://fonts.googleapis.com/css2?family=Changa+One&display=swap");
+
+.welcome {
+  height: 100vh;
+  width: 100vw;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.loginRegisterContainer {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px 50px;
+  left: 150px;
+  top: 360px;
+  background: #ffffff;
+}
+
+.header {
+  display: flex;
+}
+.headerline {
+  display: flex;
+  flex-direction: column;
+  max-width: 250px;
+  margin: 25px;
+  min-width: 250px;
+  align-items: baseline;
+}
+
+.headerS {
+  line-height: 28px;
+  font-size: 24px;
+  margin: 0 0 25px 0;
+}
+.headerText {
+  line-height: 23px;
+  font-size: 17px;
+  white-space: pre-wrap;
+}
