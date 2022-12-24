@@ -22,9 +22,8 @@ export default function Welcome() {
     confirmPassword: "",
   });
 
-  const TextField1 = styled(Button)({
-    width: "250px",
-  });
+  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
     margin: "15px",
@@ -97,6 +96,9 @@ export default function Welcome() {
         {isRegistering ? (
           <>
             <TextField
+              inputProps={{ style: inputStyle }}
+              margin="normal"
+              fullWidth
               variant="standard"
               type="email"
               placeholder="E-MAIL"
@@ -109,8 +111,10 @@ export default function Welcome() {
               }
             />
             <TextField
+              inputProps={{ style: inputStyle }}
+              margin="normal"
+              fullWidth
               variant="standard"
-              label="email"
               placeholder="Confirm E-MAIL"
               value={registerInformation.confirmEmail}
               onChange={(e) =>
@@ -121,6 +125,9 @@ export default function Welcome() {
               }
             />
             <TextField
+              inputProps={{ style: inputStyle }}
+              margin="normal"
+              fullWidth
               variant="standard"
               type="password"
               placeholder="Пароль"
@@ -133,6 +140,9 @@ export default function Welcome() {
               }
             />
             <TextField
+              inputProps={{ style: inputStyle }}
+              margin="normal"
+              fullWidth
               variant="standard"
               type="password"
               placeholder="Повторите Пароль"
@@ -161,19 +171,29 @@ export default function Welcome() {
               <div className={styles.headerline}>
                 <span className={styles.headerS}>Вход</span>
                 <TextField
+                  margin="normal"
+                  fullWidth
                   variant="standard"
+                  inputProps={{ style: inputStyle }}
                   type="email"
                   placeholder="E-MAIL"
                   onChange={handleEmailChange}
                   value={email}
                 />
                 <TextField
+                  inputProps={{ style: inputStyle }}
+                  margin="normal"
+                  fullWidth
                   variant="standard"
                   type="password"
                   onChange={handlePasswordChange}
                   value={password}
                   placeholder="Пароль"
                 />
+                <span className={styles.headerText}>
+                  {"\n"}
+                  {"\n"}
+                </span>
                 <ColorButton variant="contained" onClick={handleSignIn}>
                   Вход
                 </ColorButton>
