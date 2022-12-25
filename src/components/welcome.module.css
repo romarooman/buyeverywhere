@@ -1,12 +1,14 @@
 @import url("https://fonts.googleapis.com/css2?family=Changa+One&display=swap");
 
 .welcome {
-  
+  display: flex;
+  justify-content: center;
   height: 100vh;
-  width: 100vw;
+  max-width: 900px;
+  margin: auto;
+  align-items: center;
 
   position: relative;
-
 }
 
 .loginRegisterContainer {
@@ -17,7 +19,6 @@
   flex-direction: column;
   padding: 20px 50px;
 
-  top: 30px;
   background: #ffffff;
 }
 

@@ -21,6 +21,10 @@ export default function Welcome() {
     password: "",
     confirmPassword: "",
   });
+  const [errorEmail, setErrorEmail] = useState(false);
+  const [msgErrorEmail, setmsgErrorEmail] = useState("");
+  const [pwdError, setPwdError] = useState(false);
+  const [msgErrorPwd, setMsgErrorPwd] = useState("");
 
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
@@ -70,13 +74,40 @@ export default function Welcome() {
   };
 
   const handleRegister = () => {
+    const EMAIL_REGEXP =
+      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
     if (registerInformation.email !== registerInformation.confirmEmail) {
-      alert("Please confirm that email are the same");
+      setErrorEmail(true);
+      setmsgErrorEmail("E-mail не совпадают");
+      return;
+    } else if (registerInformation.email === "") {
+      setErrorEmail(true);
+      setmsgErrorEmail("E-mail не может быть пустым");
+      return;
+    } 
+
+    else if (!EMAIL_REGEXP.test(registerInformation.email)) {
+      setErrorEmail(true);
+      setmsgErrorEmail("Введите корректный E-mail");
+      return;
+    } 
+    
+    else if (registerInformation.password === "") {
+      setPwdError(true);
+      setMsgErrorPwd("Пароль не может быть пустым");
+      return;
+    } else if (registerInformation.password.length <= 6) {
+      setPwdError(true);
+      setMsgErrorPwd("Пароль должен содержать мин 6 символов");
+      // alert("Please confirm that password are the same");
       return;
     } else if (
       registerInformation.password !== registerInformation.confirmPassword
     ) {
-      alert("Please confirm that password are the same");
+      setPwdError(true);
+      setMsgErrorPwd("Пароли не совпадают");
+      // alert("Please confirm that password are the same");
       return;
     }
     createUserWithEmailAndPassword(
@@ -102,27 +133,33 @@ export default function Welcome() {
               variant="standard"
               type="email"
               placeholder="E-MAIL"
+              error={errorEmail}
+              helperText={msgErrorEmail}
               value={registerInformation.email}
-              onChange={(e) =>
+              onChange={(e) => {
+                setErrorEmail(false);
+                setmsgErrorEmail("");
                 setRegisterInformation({
                   ...registerInformation,
                   email: e.target.value,
-                })
-              }
+                });
+              }}
             />
             <TextField
               inputProps={{ style: inputStyle }}
               margin="normal"
               fullWidth
               variant="standard"
-              placeholder="Confirm E-MAIL"
+              placeholder="Повторите E-MAIL"
               value={registerInformation.confirmEmail}
-              onChange={(e) =>
+              onChange={(e) => {
+                setErrorEmail(false);
+                setmsgErrorEmail("");
                 setRegisterInformation({
                   ...registerInformation,
                   confirmEmail: e.target.value,
-                })
-              }
+                });
+              }}
             />
             <TextField
               inputProps={{ style: inputStyle }}
@@ -131,13 +168,17 @@ export default function Welcome() {
               variant="standard"
               type="password"
               placeholder="Пароль"
+              error={pwdError}
+              helperText={msgErrorPwd}
               value={registerInformation.password}
-              onChange={(e) =>
+              onChange={(e) => {
+                setPwdError(false);
+                setMsgErrorPwd("");
                 setRegisterInformation({
                   ...registerInformation,
                   password: e.target.value,
-                })
-              }
+                });
+              }}
             />
             <TextField
               inputProps={{ style: inputStyle }}
@@ -147,12 +188,14 @@ export default function Welcome() {
               type="password"
               placeholder="Повторите Пароль"
               value={registerInformation.confirmPassword}
-              onChange={(e) =>
+              onChange={(e) => {
+                setPwdError(false);
+                setMsgErrorPwd("");
                 setRegisterInformation({
                   ...registerInformation,
                   confirmPassword: e.target.value,
-                })
-              }
+                });
+              }}
             />
             <ColorButton variant="contained" onClick={handleRegister}>
               Регистрация
