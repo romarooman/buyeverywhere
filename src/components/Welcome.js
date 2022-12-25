@@ -5,12 +5,14 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase.js";
+
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { grey } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
 import styles from "./welcome.module.css";
+
 export default function Welcome() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -85,19 +87,15 @@ export default function Welcome() {
       setErrorEmail(true);
       setmsgErrorEmail("E-mail не может быть пустым");
       return;
-    } 
-
-    else if (!EMAIL_REGEXP.test(registerInformation.email)) {
+    } else if (!EMAIL_REGEXP.test(registerInformation.email)) {
       setErrorEmail(true);
       setmsgErrorEmail("Введите корректный E-mail");
       return;
-    } 
-    
-    else if (registerInformation.password === "") {
+    } else if (registerInformation.password === "") {
       setPwdError(true);
       setMsgErrorPwd("Пароль не может быть пустым");
       return;
-    } else if (registerInformation.password.length <= 6) {
+    } else if (registerInformation.password.length < 6) {
       setPwdError(true);
       setMsgErrorPwd("Пароль должен содержать мин 6 символов");
       // alert("Please confirm that password are the same");
@@ -118,7 +116,7 @@ export default function Welcome() {
       .then(() => {
         navigate("/homepage");
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => console.log(err));
   };
 
   return (
