@@ -47,3 +47,11 @@
   font-size: 17px;
   white-space: pre-wrap;
 }
+
+.text {
+  line-height: 23px;
+  font-size: 15px;
+  white-space: pre-wrap;
+  cursor: pointer;
+  margin-bottom:5px;
+}

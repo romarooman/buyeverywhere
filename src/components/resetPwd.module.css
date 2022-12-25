@@ -1,0 +1,21 @@
+.welcome {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    max-width: 900px;
+    margin: auto;
+    align-items: center;
+  
+    position: relative;
+  }
+
+.loginRegisterContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px 50px;
+  
+    background: #ffffff;
+  }

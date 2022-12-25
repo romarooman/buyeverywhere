@@ -231,8 +231,12 @@ export default function Welcome() {
                   value={password}
                   placeholder="Пароль"
                 />
-                <span className={styles.headerText}>
+                <span
+                  onClick={() => navigate("/reset")}
+                  className={styles.text}
+                >
                   {"\n"}
+                  Забыли пароль?
                   {"\n"}
                 </span>
                 <ColorButton variant="contained" onClick={handleSignIn}>
@@ -249,6 +253,7 @@ export default function Welcome() {
                   Мы используем данную информацию для подтверждения ваших
                   заказов и связи с вами
                 </span>
+
                 <ColorButton
                   color="primary"
                   onClick={() => setIsRegistering(true)}
