@@ -1,8 +1,8 @@
 import "./App.css";
-import Welcome from "./components/Welcome";
+import { Welcome } from "./components/Welcome";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Homepage from "./components/Homepage";
-import ResetPwd from './components/ResetPwd'
+import { Homepage } from "./components/Homepage";
+import { ResetPwd } from "./components/ResetPwd";
 
 function App() {
   return (
