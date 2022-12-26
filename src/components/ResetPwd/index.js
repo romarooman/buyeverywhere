@@ -1,0 +1,1 @@
+export { ResetPwd } from "./ResetPwd";

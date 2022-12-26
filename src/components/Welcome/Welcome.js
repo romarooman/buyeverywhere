@@ -4,16 +4,16 @@ import {
   onAuthStateChanged,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../firebase.js";
+import { auth } from "../../firebase.js";
 
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { grey } from "@mui/material/colors";
 import TextField from "@mui/material/TextField";
-import styles from "./welcome.module.css";
+import styles from "./Welcome.module.css";
 
-export default function Welcome() {
+const Welcome = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistering, setIsRegistering] = useState(false);
@@ -268,4 +268,6 @@ export default function Welcome() {
       </div>
     </div>
   );
-}
+};
+
+export { Welcome };

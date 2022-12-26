@@ -4,9 +4,10 @@ import React, { useState } from "react";
 import Button, { ButtonProps } from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { grey } from "@mui/material/colors";
-import styles from "./resetPwd.module.css";
+import styles from "./ResetPwd.module.css";
 import { useNavigate } from "react-router-dom";
-export default function ResetPwd() {
+
+const ResetPwd = () => {
   const [emailReset, setEmailReset] = useState("");
   const [isReset, setIsReset] = useState(false);
 
@@ -59,8 +60,14 @@ export default function ResetPwd() {
           </>
         ) : (
           <>
-            <TextField      multiline variant="standard" margin="normal" fullWidth value="Письмо с 
-            восстановлением пароля отправлено на вашу почту"></TextField>
+            <TextField
+              multiline
+              variant="standard"
+              margin="normal"
+              fullWidth
+              value="Письмо с 
+            восстановлением пароля отправлено на вашу почту"
+            ></TextField>
             <ColorButton
               variant="contained"
               onClick={() => navigate("/buyeverywhere")}
@@ -72,4 +79,6 @@ export default function ResetPwd() {
       </div>
     </div>
   );
-}
+};
+
+export { ResetPwd };
