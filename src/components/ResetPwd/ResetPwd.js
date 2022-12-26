@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 const ResetPwd = () => {
   const [emailReset, setEmailReset] = useState("");
-  const [isReset, setIsReset] = useState(false);
+  const [isReset, setIsReset] = useState(true);
 
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
@@ -56,6 +56,12 @@ const ResetPwd = () => {
             />
             <ColorButton variant="contained" onClick={ClikHandlerResrt}>
               Восстановить пароль
+            </ColorButton>
+            <ColorButton
+              variant="contained"
+              onClick={() => navigate("/buyeverywhere")}
+            >
+              Назад на Главную страницу
             </ColorButton>
           </>
         ) : (
