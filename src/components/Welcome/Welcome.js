@@ -7,11 +7,10 @@ import {
 import { auth } from "../../firebase.js";
 
 import { useNavigate } from "react-router-dom";
-import { styled } from "@mui/material/styles";
-import Button, { ButtonProps } from "@mui/material/Button";
 import { grey } from "@mui/material/colors";
-import TextField from "@mui/material/TextField";
+import { TextField, Checkbox, Button, styled } from "@mui/material";
 import styles from "./Welcome.module.css";
+import validator from "validator";
 
 const Welcome = () => {
   const [email, setEmail] = useState("");
@@ -19,21 +18,27 @@ const Welcome = () => {
   const [isRegistering, setIsRegistering] = useState(false);
   const [registerInformation, setRegisterInformation] = useState({
     email: "",
-    confirmEmail: "",
     password: "",
     confirmPassword: "",
+    name: "",
+    surname: "",
+    phone: "",
   });
   const [errorEmail, setErrorEmail] = useState(false);
   const [msgErrorEmail, setmsgErrorEmail] = useState("");
   const [pwdError, setPwdError] = useState(false);
   const [msgErrorPwd, setMsgErrorPwd] = useState("");
+  const [phoneError, setPhoneError] = useState(false);
+  const [msgErrorPhone, setmsgErrorPhone] = useState("");
 
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
-    margin: "15px",
-    width: "250px",
+    margin: "15px 15px 15px 0",
+    // width: "250px",
     backgroundColor: grey[900],
     "&:hover": {
       backgroundColor: grey[700],
@@ -79,11 +84,7 @@ const Welcome = () => {
     const EMAIL_REGEXP =
       /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
-    if (registerInformation.email !== registerInformation.confirmEmail) {
-      setErrorEmail(true);
-      setmsgErrorEmail("E-mail не совпадают");
-      return;
-    } else if (registerInformation.email === "") {
+    if (registerInformation.email === "") {
       setErrorEmail(true);
       setmsgErrorEmail("E-mail не может быть пустым");
       return;
@@ -100,6 +101,11 @@ const Welcome = () => {
       setMsgErrorPwd("Пароль должен содержать мин 6 символов");
       // alert("Please confirm that password are the same");
       return;
+    } else if (!validator.isMobilePhone(registerInformation.phone, ["ru-RU"])) {
+      setPhoneError(true);
+      setmsgErrorPhone("Введите корректный номер телефона");
+      // alert("Please confirm that password are the same");
+      return;
     } else if (
       registerInformation.password !== registerInformation.confirmPassword
     ) {
@@ -111,7 +117,10 @@ const Welcome = () => {
     createUserWithEmailAndPassword(
       auth,
       registerInformation.email,
-      registerInformation.password
+      registerInformation.password,
+      registerInformation.name,
+      registerInformation.surname,
+      registerInformation.phone
     )
       .then(() => {
         navigate("/homepage");
@@ -124,87 +133,133 @@ const Welcome = () => {
       <div className={styles.loginRegisterContainer}>
         {isRegistering ? (
           <>
-            <TextField
-              inputProps={{ style: inputStyle }}
-              margin="normal"
-              fullWidth
-              variant="standard"
-              type="email"
-              placeholder="E-MAIL"
-              error={errorEmail}
-              helperText={msgErrorEmail}
-              value={registerInformation.email}
-              onChange={(e) => {
-                setErrorEmail(false);
-                setmsgErrorEmail("");
-                setRegisterInformation({
-                  ...registerInformation,
-                  email: e.target.value,
-                });
-              }}
-            />
-            <TextField
-              inputProps={{ style: inputStyle }}
-              margin="normal"
-              fullWidth
-              variant="standard"
-              placeholder="Повторите E-MAIL"
-              value={registerInformation.confirmEmail}
-              onChange={(e) => {
-                setErrorEmail(false);
-                setmsgErrorEmail("");
-                setRegisterInformation({
-                  ...registerInformation,
-                  confirmEmail: e.target.value,
-                });
-              }}
-            />
-            <TextField
-              inputProps={{ style: inputStyle }}
-              margin="normal"
-              fullWidth
-              variant="standard"
-              type="password"
-              placeholder="Пароль"
-              error={pwdError}
-              helperText={msgErrorPwd}
-              value={registerInformation.password}
-              onChange={(e) => {
-                setPwdError(false);
-                setMsgErrorPwd("");
-                setRegisterInformation({
-                  ...registerInformation,
-                  password: e.target.value,
-                });
-              }}
-            />
-            <TextField
-              inputProps={{ style: inputStyle }}
-              margin="normal"
-              fullWidth
-              variant="standard"
-              type="password"
-              placeholder="Повторите Пароль"
-              value={registerInformation.confirmPassword}
-              onChange={(e) => {
-                setPwdError(false);
-                setMsgErrorPwd("");
-                setRegisterInformation({
-                  ...registerInformation,
-                  confirmPassword: e.target.value,
-                });
-              }}
-            />
-            <ColorButton variant="contained" onClick={handleRegister}>
-              Регистрация
-            </ColorButton>
-            <BackButton
-              variant="text"
-              className="create-account-button"
-              onClick={() => setIsRegistering(false)}
-            >
-              Назад
-            </BackButton>
+            <div className={styles.item}>
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="email"
+                placeholder="E-MAIL"
+                error={errorEmail}
+                helperText={msgErrorEmail}
+                value={registerInformation.email}
+                onChange={(e) => {
+                  setErrorEmail(false);
+                  setmsgErrorEmail("");
+                  setRegisterInformation({
+                    ...registerInformation,
+                    email: e.target.value,
+                  });
+                }}
+              />
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="password"
+                placeholder="Пароль"
+                error={pwdError}
+                helperText={msgErrorPwd}
+                value={registerInformation.password}
+                onChange={(e) => {
+                  setPwdError(false);
+                  setMsgErrorPwd("");
+                  setRegisterInformation({
+                    ...registerInformation,
+                    password: e.target.value,
+                  });
+                }}
+              />
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="name"
+                placeholder="Имя"
+                // error={pwdError}
+                // helperText={msgErrorPwd}
+                value={registerInformation.name}
+                onChange={(e) => {
+                  setRegisterInformation({
+                    ...registerInformation,
+                    name: e.target.value,
+                  });
+                }}
+              />
+            </div>
+            <div className={styles.item}>
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="tel"
+                placeholder="Номер телефона"
+                error={phoneError}
+                helperText={msgErrorPhone}
+                value={registerInformation.phone}
+                onChange={(e) => {
+                  setPhoneError(false);
+                  setmsgErrorPhone("");
+                  setRegisterInformation({
+                    ...registerInformation,
+                    phone: e.target.value,
+                  });
+                }}
+              />
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="password"
+                placeholder="Повторите Пароль"
+                value={registerInformation.confirmPassword}
+                onChange={(e) => {
+                  setPwdError(false);
+                  setMsgErrorPwd("");
+                  setRegisterInformation({
+                    ...registerInformation,
+                    confirmPassword: e.target.value,
+                  });
+                }}
+              />
+              <TextField
+                inputProps={{ style: inputStyle }}
+                margin="normal"
+                fullWidth
+                variant="standard"
+                type="surname"
+                placeholder="Фамилия"
+                // error={pwdError}
+                // helperText={msgErrorPwd}
+                value={registerInformation.surname}
+                onChange={(e) => {
+                  setRegisterInformation({
+                    ...registerInformation,
+                    surname: e.target.value,
+                  });
+                }}
+              />
+            </div>
+
+            <div className={styles.item}>
+              <Checkbox {...label} />
+              <Checkbox {...label} />
+              <ColorButton variant="contained" onClick={handleRegister}>
+                Регистрация
+              </ColorButton>
+              <BackButton
+                variant="text"
+                className="create-account-button"
+                onClick={() => setIsRegistering(false)}
+              >
+                Назад
+              </BackButton>
+            </div>
           </>
         ) : (
           <>
