@@ -13,6 +13,8 @@ import styles from "./Welcome.module.css";
 import validator from "validator";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormHelperText from "@mui/material/FormHelperText";
+import FormControl from "@mui/material/FormControl";
+import Link from "@mui/material/Link";
 
 const Welcome = () => {
   const [email, setEmail] = useState("");
@@ -28,10 +30,15 @@ const Welcome = () => {
   });
   const [errorEmail, setErrorEmail] = useState(false);
   const [msgErrorEmail, setmsgErrorEmail] = useState("");
+
   const [pwdError, setPwdError] = useState(false);
   const [msgErrorPwd, setMsgErrorPwd] = useState("");
+
   const [phoneError, setPhoneError] = useState(false);
   const [msgErrorPhone, setmsgErrorPhone] = useState("");
+
+  const [msgAgree, setmsgAgree] = useState("");
+  const [handlerrorAgree, sethandlerrorAgree] = useState("");
 
   const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
 
@@ -40,11 +47,15 @@ const Welcome = () => {
   const [checked, setChecked] = useState(true);
 
   const handleChange = (event) => {
+    setmsgAgree("");
+    sethandlerrorAgree(false);
     setChecked(event.target.checked);
   };
   const [checkedAgree, setCheckedAgree] = useState(true);
 
   const handleChangeAgree = (event) => {
+    setmsgAgree("");
+    sethandlerrorAgree(false);
     setCheckedAgree(event.target.checked);
   };
 
@@ -121,9 +132,9 @@ const Welcome = () => {
       // alert("Please confirm that password are the same");
       return;
     } else if (!checked || !checkedAgree) {
-      // setPhoneError(true);
-      // setmsgErrorPhone("Введите корректный номер телефона");
-      // alert("Please confirm that password are the same");
+      sethandlerrorAgree(true);
+      setmsgAgree("Поддтевердите согласие");
+
       return;
     } else if (
       registerInformation.password !== registerInformation.confirmPassword
@@ -144,7 +155,13 @@ const Welcome = () => {
       .then(() => {
         navigate("/homepage");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err.code);
+        if (err.code === "auth/email-already-in-use") {
+          setErrorEmail(true);
+          setmsgErrorEmail("Такой E-MAIL уже существует");
+        }
+      });
   };
 
   return (
@@ -266,39 +283,39 @@ const Welcome = () => {
             </div>
 
             <div className={styles.item}>
-              <FormControlLabel
-                control={<Checkbox checked={checked} onChange={handleChange} />}
-                label={
-                  <div className={styles.politika}>
-                    Я согласен с{" "}
-                    <div onClick={() => navigate("/agreement")}>
-                      условиями использования
+              <FormControl required error={handlerrorAgree}>
+                <FormControlLabel
+                  control={
+                    <Checkbox checked={checked} onChange={handleChange} />
+                  }
+                  label={
+                    <div className={styles.politika}>
+                      Я согласен с{" "}
+                      <Link color="inherit" href="/agreement">
+                        {"условиями использования"}
+                      </Link>
                     </div>
-                  </div>
-                }
-              />
-              <FormHelperText>Подтвердите согласие</FormHelperText>
-              <FormControlLabel
-              
-                error={false}
-                control={
-                  <Checkbox
-                    checked={checkedAgree}
-                    onChange={handleChangeAgree}
-                  />
-                }
-                label={
-                  <div className={styles.politika}>
-                    Я согласен с{" "}
-                    <div
-                      onClick={() => navigate("/politika-konfidentsialnosti")}
-                    >
-                      политикой конфиденциальности
+                  }
+                />
+                <FormHelperText>{msgAgree}</FormHelperText>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checkedAgree}
+                      onChange={handleChangeAgree}
+                    />
+                  }
+                  label={
+                    <div className={styles.politika}>
+                      Я согласен с{" "}
+                      <Link color="inherit" href="/politika-konfidentsialnosti">
+                        {"политикой конфиденциальности"}
+                      </Link>
                     </div>
-                  </div>
-                }
-              />
-              <FormHelperText>Подтвердите согласие</FormHelperText>
+                  }
+                />
+                <FormHelperText>{msgAgree}</FormHelperText>
+              </FormControl>
               <ColorButton variant="contained" onClick={handleRegister}>
                 Регистрация
               </ColorButton>
