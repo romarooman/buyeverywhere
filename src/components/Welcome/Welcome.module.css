@@ -13,12 +13,12 @@
 
 .loginRegisterContainer {
   display: flex;
-  align-items: lex-start;
-  justify-content: lex-start;
+  align-items: flex-start;
+  justify-content: flex-start;
   flex-direction: row;
-  padding: 20px 50px;
+
   background: #ffffff;
-  max-width: 700px;
+  max-width: 950px;
   min-width: 400px;
   flex-wrap: wrap;
 }
@@ -29,9 +29,10 @@
   padding: 5px;
   justify-content: flex-start;
   align-items: flex-start;
-  max-width: 250px;
+  max-width: 450px;
   margin: 15px;
-  min-width: 250px;
+  padding: 10px;
+  min-width: 350px;
 }
 
 .header {
@@ -66,4 +67,9 @@
   white-space: pre-wrap;
   cursor: pointer;
   margin-bottom: 5px;
+}
+
+.politika {
+  display: flex;
+  white-space: pre-wrap;
 }

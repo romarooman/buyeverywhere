@@ -1,0 +1,1 @@
+export { Politika } from "./Politika";

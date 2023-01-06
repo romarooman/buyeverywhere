@@ -11,6 +11,8 @@ import { grey } from "@mui/material/colors";
 import { TextField, Checkbox, Button, styled } from "@mui/material";
 import styles from "./Welcome.module.css";
 import validator from "validator";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormHelperText from "@mui/material/FormHelperText";
 
 const Welcome = () => {
   const [email, setEmail] = useState("");
@@ -35,10 +37,21 @@ const Welcome = () => {
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
+  const [checkedAgree, setCheckedAgree] = useState(true);
+
+  const handleChangeAgree = (event) => {
+    setCheckedAgree(event.target.checked);
+  };
+
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
     margin: "15px 15px 15px 0",
-    // width: "250px",
+    width: "250px",
     backgroundColor: grey[900],
     "&:hover": {
       backgroundColor: grey[700],
@@ -48,6 +61,7 @@ const Welcome = () => {
   const BackButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
     color: grey[500],
+    width: "250px",
     "&:hover": {
       backgroundColor: grey[500],
       color: grey[50],
@@ -104,6 +118,11 @@ const Welcome = () => {
     } else if (!validator.isMobilePhone(registerInformation.phone, ["ru-RU"])) {
       setPhoneError(true);
       setmsgErrorPhone("Введите корректный номер телефона");
+      // alert("Please confirm that password are the same");
+      return;
+    } else if (!checked || !checkedAgree) {
+      // setPhoneError(true);
+      // setmsgErrorPhone("Введите корректный номер телефона");
       // alert("Please confirm that password are the same");
       return;
     } else if (
@@ -247,8 +266,39 @@ const Welcome = () => {
             </div>
 
             <div className={styles.item}>
-              <Checkbox {...label} />
-              <Checkbox {...label} />
+              <FormControlLabel
+                control={<Checkbox checked={checked} onChange={handleChange} />}
+                label={
+                  <div className={styles.politika}>
+                    Я согласен с{" "}
+                    <div onClick={() => navigate("/agreement")}>
+                      условиями использования
+                    </div>
+                  </div>
+                }
+              />
+              <FormHelperText>Подтвердите согласие</FormHelperText>
+              <FormControlLabel
+              
+                error={false}
+                control={
+                  <Checkbox
+                    checked={checkedAgree}
+                    onChange={handleChangeAgree}
+                  />
+                }
+                label={
+                  <div className={styles.politika}>
+                    Я согласен с{" "}
+                    <div
+                      onClick={() => navigate("/politika-konfidentsialnosti")}
+                    >
+                      политикой конфиденциальности
+                    </div>
+                  </div>
+                }
+              />
+              <FormHelperText>Подтвердите согласие</FormHelperText>
               <ColorButton variant="contained" onClick={handleRegister}>
                 Регистрация
               </ColorButton>
