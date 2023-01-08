@@ -38,9 +38,14 @@ const Welcome = () => {
   const [msgErrorPhone, setmsgErrorPhone] = useState("");
 
   const [msgAgree, setmsgAgree] = useState("");
-  const [handlerrorAgree, sethandlerrorAgree] = useState("");
+  const [handlerrorAgree, sethandlerrorAgree] = useState(false);
 
-  const inputStyle = { WebkitBoxShadow: "0 0 0 1000px white inset" };
+  const [msgSign, setmsgSign] = useState("");
+  const [handlerrorSingn, setHandlerrorSingn] = useState(false);
+
+  const inputStyle = {
+    WebkitBoxShadow: "0 0 0 1000px white inset",
+  };
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -62,7 +67,7 @@ const Welcome = () => {
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
     margin: "15px 15px 15px 0",
-    width: "250px",
+    width: "260px",
     backgroundColor: grey[900],
     "&:hover": {
       backgroundColor: grey[700],
@@ -79,6 +84,13 @@ const Welcome = () => {
     },
   }));
 
+  const FieldText = styled(Button)(({ theme }) => ({
+    marginTop: "2px",
+    marginBottom: "2px",
+    width: "100%",
+    minHeight: "55px",
+  }));
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +102,7 @@ const Welcome = () => {
   }, []);
 
   const handleEmailChange = (e) => {
+    setmsgSign("");
     setEmail(e.target.value);
   };
 
@@ -102,7 +115,15 @@ const Welcome = () => {
       .then(() => {
         navigate("/homepage");
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => {
+        if (err.code === "auth/wrong-password") {
+          setHandlerrorSingn(true);
+          setmsgSign("Неверный пароль");
+        } else if (err.code === "auth/user-not-found") {
+          setHandlerrorSingn(true);
+          setmsgSign("Неверный E-MAIL");
+        }
+      });
   };
 
   const handleRegister = () => {
@@ -333,37 +354,40 @@ const Welcome = () => {
             <div className={styles.header}>
               <div className={styles.headerline}>
                 <span className={styles.headerS}>Вход</span>
-                <TextField
-                  margin="normal"
-                  fullWidth
-                  variant="standard"
-                  inputProps={{ style: inputStyle }}
-                  type="email"
-                  placeholder="E-MAIL"
-                  onChange={handleEmailChange}
-                  value={email}
-                />
-                <TextField
-                  inputProps={{ style: inputStyle }}
-                  margin="normal"
-                  fullWidth
-                  variant="standard"
-                  type="password"
-                  onChange={handlePasswordChange}
-                  value={password}
-                  placeholder="Пароль"
-                />
-                <span
-                  onClick={() => navigate("/reset")}
-                  className={styles.text}
-                >
-                  {"\n"}
-                  Забыли пароль?
-                  {"\n"}
-                </span>
-                <ColorButton variant="contained" onClick={handleSignIn}>
-                  Вход
-                </ColorButton>
+                <FormControl required error={handlerrorSingn}>
+                  <TextField
+                    margin="normal"
+                    fullWidth
+                    variant="standard"
+                    inputProps={{ style: inputStyle }}
+                    type="email"
+                    placeholder="E-MAIL"
+                    onChange={handleEmailChange}
+                    value={email}
+                  />
+                  <TextField
+                    inputProps={{ style: inputStyle }}
+                    margin="normal"
+                    fullWidth
+                    variant="standard"
+                    type="password"
+                    onChange={handlePasswordChange}
+                    value={password}
+                    placeholder="Пароль"
+                  />
+                  <FormHelperText>{msgSign}</FormHelperText>
+                  <span
+                    onClick={() => navigate("/reset")}
+                    className={styles.text}
+                  >
+                    {"\n"}
+                    Забыли пароль?
+                    {"\n"}
+                  </span>
+                  <ColorButton variant="contained" onClick={handleSignIn}>
+                    Вход
+                  </ColorButton>
+                </FormControl>
               </div>
               <div className={styles.headerline}>
                 <span className={styles.headerS}>Регистрация</span>
