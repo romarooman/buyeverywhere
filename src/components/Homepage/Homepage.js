@@ -4,7 +4,7 @@ import { auth, db } from "../../firebase.js";
 import { useNavigate } from "react-router-dom";
 import { uid } from "uid";
 import { set, ref, onValue, remove, update } from "firebase/database";
-import "./Homepage.module.css";
+import styles from "./Homepage.module.css";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -96,26 +96,76 @@ const Homepage = () => {
   };
 
   return (
-    <div className="homepage">
-      <div className="ordered1">
-        <form onSubmit={writeToDatabase} className="orders">
+    <div className={styles.homepage}>
+      <div className={styles.orders}>
+        <h2>Новый заказ</h2>
+        <form onSubmit={writeToDatabase} className={styles.order}>
           <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
             key={1}
-            name="order"
+            name="link"
             type="text"
-            placeholder="Название товара"
+            placeholder="Ссылка на товар"
             onChange={handleChange}
           />
           <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
             key={2}
-            name="links"
+            name="nameItem"
             type="text"
-            placeholder="цена"
+            placeholder="Название товара, как в магазине"
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
+            key={3}
+            name="price"
+            type="text"
+            placeholder="Стоимость за штуку"
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
+            key={4}
+            name="amount"
+            type="text"
+            placeholder="Количество"
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
+            key={5}
+            name="size"
+            type="text"
+            placeholder="Размер"
+            onChange={handleChange}
+          />
+          <TextField
+            margin="normal"
+            fullWidth
+            variant="standard"
+            key={6}
+            name="article"
+            type="text"
+            placeholder="Артикул"
             onChange={handleChange}
           />
         </form>
         <div>
-          <AddIcon onClick={writeToDatabase} className="add-confirm-icon" />
+          <AddIcon
+            onClick={writeToDatabase}
+            className={styles.addConfirmIcon}
+          />
         </div>
         {/* {isEdit ? (
           <div>
@@ -132,8 +182,8 @@ const Homepage = () => {
       </div>
 
       {todos.map((todo, numbers) => (
-        <div className="ordered">
-          <div className="todo">
+        <div className={styles.ordered}>
+          <div className={styles.todo}>
             <duv>Заказ {numbers + 1}</duv>
             <TextField
               onChange={handleChange}
@@ -152,12 +202,12 @@ const Homepage = () => {
           <DeleteIcon
             fontSize="large"
             onClick={() => handleDelete(todo.uidd)}
-            className="delete-button"
+            className={styles.deleteButton}
           />
         </div>
       ))}
 
-      <LogoutIcon onClick={handleSignOut} className="logout-icon" />
+      <LogoutIcon onClick={handleSignOut} className={styles.logoutIcon} />
     </div>
   );
 };
