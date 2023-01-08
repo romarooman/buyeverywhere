@@ -67,7 +67,7 @@ const Welcome = () => {
   const ColorButton = styled(Button)(({ theme }) => ({
     color: theme.palette.getContrastText(grey[700]),
     margin: "15px 15px 15px 0",
-    width: "260px",
+    width: "250px",
     backgroundColor: grey[900],
     "&:hover": {
       backgroundColor: grey[700],
@@ -107,6 +107,7 @@ const Welcome = () => {
   };
 
   const handlePasswordChange = (e) => {
+    setmsgSign("");
     setPassword(e.target.value);
   };
 
